@@ -1,0 +1,307 @@
+﻿@model DEVICE.Web.ViewModels.RegistroEquipoViewModel
+@{
+    ViewData["Title"] = "Registro de Equipos";
+}
+
+<br />
+<form asp-area="Equipo" asp-controller="Registro" asp-action="Index" method="post">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label for="inputPassword4">Tipo</label>
+            <select name="TipoProductoID" id="cboTipoProducto" class="form-control">
+                <option selected>---SELECCIONE---</option>
+                @foreach (var item in Model.ListadoTipoProducto)
+                {
+                    <option value="@item.Id">@item.Descripcion</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-5" id="divNumeroSerie" style="display:inline">
+            <label for="inputEmail4">N° Serie</label>
+            <input type="text" name="NumeroSerie" class="form-control" id="txtNroSerie" placeholder="Ingrese el número de serie">
+        </div>
+        <div class="form-group col-md-5" id="divNumeroProducto" style="display:inline">
+            <label for="inputEmail4">N° Producto</label>
+            <input type="text" name="NumeroProducto" class="form-control" id="txtNroProducto" placeholder="Ingrese el número de producto">
+        </div>
+
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label for="inputEmail4">Memoria RAM</label>
+            <select name="MemoriaRam" id="cboMemoriaRam" class="form-control">
+                <option selected>---SELECCIONE---</option>
+                @for (int i = 4; i <= 64; i += 2)
+                {
+                    <option value="@i">@(i + "GB")</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-9">
+            <label for="inputEmail4">Modelo del Sistema</label>
+            <input type="text" name="ModeloSistema" class="form-control" id="txtModeloSistema" placeholder="Ingrese el modelo del sistema">
+        </div>
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Sistema Operativo</label>
+            <select name="SistemaOperativoID" id="cboSistemaOperativo" class="form-control">
+                <option selected>---SELECCIONE---</option>
+                @foreach (var item in Model.ListadoSistemaOperativo)
+                {
+                    <option value="@item.Id">@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Fabricante</label>
+            <select name="FabricanteID" id="cboFabricante" class="form-control">
+                <option selected>---SELECCIONE---</option>
+                @foreach (var item in Model.ListadoFabricante)
+                {
+                    <option value="@item.Id">@item.Descripcion</option>
+                }
+            </select>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Procesador</label>
+            <select name="ProcesadorID" id="cboProcesador" class="form-control">
+                <option selected>---SELECCIONE---</option>
+                @foreach (var item in Model.ListadoProcesador)
+                {
+                    <option value="@item.Id">@item.Descripcion</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div id="divIP" style="display:none" class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">IP</label>
+            <input type="text" name="IP" class="form-control" id="txtIP" placeholder="Ingrese la dirección IP">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Usuario IP</label>
+            <input type="text" name="Usuario" class="form-control" id="txtUsuario" placeholder="Ingrese el Usuario IP">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">Password IP</label>
+            <input type="text" name="Password" class="form-control" id="txtPassword" placeholder="Ingrese el Password IP">
+        </div>
+
+    </div>
+
+    <div id="divSSID" style="display:none" class="form-row">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">SSID Nombre</label>
+            <input type="text" name="SSIDNombre" class="form-control" id="txtSSIDNombre" placeholder="Ingrese la dirección IP">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">SSID Password</label>
+            <input type="text" name="SSIDPassword" class="form-control" id="txtSSIDPassword" placeholder="Ingrese el Usuario IP">
+        </div>
+       
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="inputEmail4">Comentarios</label>
+            <input type="hidden" id="hidIDProducto" value="-1" />
+            @*<input type="text" name="ProductoNombre" class="form-control" id="txtDescripcion" placeholder="Ingrese una descripción">*@
+            <textarea name="Comentario" class="form-control" id="txtDescripcion" cols="40" rows="3"></textarea>
+
+        </div>
+
+    </div>
+    <div class="d-flex justify-content-center">
+        <button type="button" id="btnGuardar" class="btn btn-success btn-lg mr-5">Guardar</button>
+        <button type="reset" class="btn btn-danger btn-sm">Cancelar</button>
+    </div>
+
+</form>
+
+<hr />
+
+<div id="divListado">
+
+</div>
+
+
+
+<script>
+
+
+    $('#cboTipoProducto').on('change', function () {
+
+        //1	Desktop	True	    1
+        //2	Laptop	True	    1
+        //3	Impresora	True	2
+        //4	Cámara	True	    3
+        //5	Servidores	True	1
+        //6	Fortinet	True	4
+        //7	TP - Link	True	5
+        //8	Handheld	True	6
+
+        let idTipoProducto = $(this).val();
+        //alert(idTipoProducto);
+
+        switch (idTipoProducto) {
+            case "1":
+                $('#divIP').css('display', 'inline');
+                $('#divSSID').css('display', 'none');
+                $('#divNumeroSerie').css('display', 'none');
+                $('#divNumeroProducto').css('display', 'none');
+                break;
+            case "2":
+                $('#divIP').css('display', 'inline');
+                $('#divSSID').css('display', 'none');
+                $('#divNumeroSerie').css('display', 'none');
+                $('#divNumeroProducto').css('display', 'none');
+                break;
+            case "3":
+                $('#divIP').css('display', 'inline');               
+                $('#divSSID').css('display', 'none');
+                $('#divNumeroSerie').css('display', 'none');
+                $('#divNumeroProducto').css('display', 'none');
+                break;
+            case "7":
+                $('#divIP').css('display', 'inline');               
+                $('#divSSID').css('display', 'inline');
+                $('#divNumeroSerie').css('display', 'inline');
+                $('#divNumeroProducto').css('display', 'none');
+                break;
+            case 7:
+                // code block
+                break;
+            case 7:
+                // code block
+                break;
+            default:
+            // code block
+        }
+        //if (idTipoProducto == 3 || idTipoProducto == 7) {
+        //    $('#divIP').css('display', 'inline');
+        //} else {
+        //    $('#divIP').css('display', 'none');
+        //}
+    });
+
+
+
+    CargarProductos()
+    function CargarProductos() {
+        //alert(baseUrl);
+        $.ajax({
+            type: "GET",
+            url: "/Equipo/Registro/Listado",
+            cache: false,
+            success: function (dataHtml) {
+                $("#divListado").html(dataHtml);
+                //$("#divListadoEmpresa #tbEmpresa").DataTable();
+            }
+        });
+    }
+
+
+
+    $("#btnGuardar").click(function () {
+        let vIDProducto = $("#hidIDProducto").val();
+        let vDescripcion = $("#txtDescripcion").val();
+        let vTipoProductoID = $("#cboTipoProducto").val();
+        let vNumeroSerie = $("#txtNroSerie").val();
+        let vNumeroProducto = $("#txtNroProducto").val();
+        let vMemoriaRam = $("#cboMemoriaRam").val();
+        let vModeloSistema = $("#txtModeloSistema").val();
+        let vSistemaOperativoID = $("#cboSistemaOperativo").val();
+        let vFabricanteID = $("#cboFabricante").val();
+        let vProcesadorID = $("#cboProcesador").val();
+
+        var objProducto = JSON.stringify({
+            ID: (vIDProducto == -1 ? 0 : vIDProducto),
+            ProductoNombre: vDescripcion,
+            TipoProductoID: vTipoProductoID,
+            NumeroSerie: vNumeroSerie,
+            NumeroProducto: vNumeroProducto,
+            MemoriaRam: vMemoriaRam,
+            ModeloSistema: vModeloSistema,
+            SistemaOperativoID: vSistemaOperativoID,
+            FabricanteID: vFabricanteID,
+            ProcesadorID: vProcesadorID
+
+        });
+
+
+        var dataType = 'application/json; charset=utf-8';
+
+        $.ajax({
+            type: 'POST',
+            url: '/Equipo/Registro/Index',
+            dataType: 'json',
+            contentType: dataType,
+            data: objProducto,
+            success: function (exito) {
+                if (exito) {
+                    alert("Se registró correctamente!")
+                    CargarProductos();
+                    //$("#modalRegistroEmpresa").modal("toggle");
+                    //limpiarControles();
+                } else {
+                    alert("Ocurrió un error en la transacción")
+                }
+            }
+        });
+    });
+
+
+
+    $("#divListado").on('click', '.btnEliminarProducto', function () {
+        let vIdProducto = $(this).attr('data-id');
+
+        $.ajax({
+            type: "POST",
+            url: '/Equipo/Registro/Eliminar',
+            data: { id: vIdProducto },
+            cache: false,
+            success: function (exito) {
+                if (exito) {
+                    alert("La Empresa fue eliminada exitosamente.");
+                    CargarProductos();
+                } else {
+                    alert("Ocurrió un error en la transacción");
+                }
+            }
+        });
+
+
+    });
+
+    $("#divListado").on('click', '.btnEditarProducto', function () {
+        //LimpiarControles();
+        let vIdProducto = $(this).attr('data-id');
+        $("#hidIDProducto").val(vIdProducto);
+
+        $.ajax({
+            type: "GET",
+            url: "/Equipo/Registro/Obtener",
+            data: { id: vIdProducto },
+            cache: false,
+            success: function (objProducto) {
+                console.log(objProducto);
+                $("#hidIDProducto").val(objProducto.id);
+                $("#txtDescripcion").val(objProducto.productoNombre);
+                $("#cboTipoProducto").val(objProducto.tipoProductoId);
+                $("#txtNroSerie").val(objProducto.numeroSerie);
+                $("#txtNroProducto").val(objProducto.numeroProducto);
+                $("#cboMemoriaRam").val(objProducto.memoriaRam);
+                $("#txtModeloSistema").val(objProducto.modeloSistema);
+                $("#cboSistemaOperativo").val(objProducto.sistemaOperativoId);
+                $("#cboFabricante").val(objProducto.fabricanteId);
+                $("#cboProcesador").val(objProducto.procesadorId);
+
+            }
+        });
+    });
+
+</script>

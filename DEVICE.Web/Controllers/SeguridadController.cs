@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DEVICE.Web.Models;
+using DEVICE.Web.Repos;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +20,15 @@ namespace DEVICE.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string codigo, string contrasena)
+        public async Task<IActionResult> Login(string codigo, string contrasena)
         {
-            return RedirectToAction("Dashboard", "Main", new { area = "Administrativo" });
+            Persona persona = await PersonaRepo.GetPersonaPorCredenciales(codigo, contrasena);
+            if (persona != null)
+            {
+                return RedirectToAction("Dashboard", "Main", new { area = "Administrativo" });
+            }
+
+            return RedirectToAction(nameof(Login));
         }
     }
 }
