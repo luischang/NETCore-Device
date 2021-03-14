@@ -33,6 +33,9 @@ namespace DEVICE.Web.Repos
             {
                 using var data = new DeviceDBContext();
                 producto.Estado = true;
+                producto.SistemaOperativoId = (producto.SistemaOperativoId == -1 ? null : producto.SistemaOperativoId);
+                producto.FabricanteId = (producto.FabricanteId == -1 ? null : producto.FabricanteId);
+                producto.ProcesadorId = (producto.ProcesadorId == -1 ? null : producto.ProcesadorId);
                 data.Producto.Add(producto);
                 await data.SaveChangesAsync();
             }
@@ -79,6 +82,11 @@ namespace DEVICE.Web.Repos
                 productoActual.SistemaOperativoId = producto.SistemaOperativoId;
                 productoActual.FabricanteId = producto.FabricanteId;
                 productoActual.ProcesadorId = producto.ProcesadorId;
+                productoActual.IP = producto.IP;
+                productoActual.Usuario = producto.Usuario;
+                productoActual.Password = producto.Password;
+                productoActual.SSIDNombre = producto.SSIDNombre;
+                productoActual.SSIDPassword = producto.SSIDPassword;
 
                 await data.SaveChangesAsync();
             }

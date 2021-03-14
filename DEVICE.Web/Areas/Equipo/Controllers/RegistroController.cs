@@ -12,6 +12,13 @@ namespace DEVICE.Web.Areas.Equipo.Controllers
     [Area(nameof(Equipo))]
     public class RegistroController : Controller
     {
+
+        //public async Task<IActionResult> Principal()
+        //{
+        //    return View();
+        //}
+    
+
         public async Task<IActionResult> Index()
         {
             var listado = new RegistroEquipoViewModel();
@@ -37,7 +44,10 @@ namespace DEVICE.Web.Areas.Equipo.Controllers
 
         public async Task<IActionResult> Listado()
         {
-            var listado = await ProductoRepo.ObtenerProducto();
+            var listado = new EquipoFabricanteViewModel();
+            listado.ListadoFabricante = await FabricanteRepo.ObtenerFabricante();
+            listado.ListadoProducto = await ProductoRepo.ObtenerProducto();
+            listado.ListadoTipoProducto = await TipoProductoRepo.ObtenerTipoProducto();
             return PartialView(listado);
         }
 

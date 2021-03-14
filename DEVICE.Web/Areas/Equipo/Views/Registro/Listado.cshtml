@@ -1,25 +1,23 @@
-﻿@model IEnumerable<DEVICE.Web.Models.Producto>
+﻿@model DEVICE.Web.ViewModels.EquipoFabricanteViewModel
 <h5>Listado de Productos</h5>
 <table class="table">
     <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">N° Serie</th>
-            <th scope="col">N° Producto</th>
-            <th scope="col">Memoria</th>
+            <th scope="col">Tipo</th>
+            <th scope="col">Modelo</th>
+            <th scope="col">Fabricante</th>
             <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.ListadoProducto)
         {
         <tr>
             <td scope="row">@item.Id</td>
-            <td>@item.Comentario</td>
-            <td>@item.NumeroSerie</td>
-            <td>@item.NumeroProducto</td>
-            <td>@item.MemoriaRam</td>
+            <td>@Model.ListadoTipoProducto.Where(x => x.Id == item.TipoProductoId).FirstOrDefault().Descripcion</td>
+            <td>@item.Modelo</td>
+            <td>@Model.ListadoFabricante.Where(x => x.Id==item.FabricanteId).FirstOrDefault().Descripcion</td>           
             <td>
                 <button id="btnEliminarProducto"
                         class="btnEliminarProducto btn btn-danger"

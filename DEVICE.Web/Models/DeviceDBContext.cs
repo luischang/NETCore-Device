@@ -38,6 +38,8 @@ namespace DEVICE.Web.Models
         public virtual DbSet<Ubicacion> Ubicacion { get; set; }
         public virtual DbSet<Zona> Zona { get; set; }
 
+        public virtual DbSet<SucursalProducto> SucursalProducto { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -144,24 +146,19 @@ namespace DEVICE.Web.Models
             modelBuilder.Entity<PersonaProducto>(entity =>
             {
                 entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.FechaAsignacionIp)
-                    .HasColumnType("datetime")
-                    .HasColumnName("FechaAsignacionIP");
-
+              
                 entity.Property(e => e.FechaEntrega)
                     .HasMaxLength(10)
                     .IsFixedLength(true);
 
                 entity.Property(e => e.FechaProximaCambio).HasColumnType("datetime");
-
-                entity.Property(e => e.NumeroIp)
-                    .HasMaxLength(20)
-                    .HasColumnName("NumeroIP");
+               
 
                 entity.Property(e => e.PersonaId).HasColumnName("PersonaID");
 
                 entity.Property(e => e.ProductoId).HasColumnName("ProductoID");
+
+                entity.Property(e => e.Comentario).HasColumnName("Comentario");
 
                 entity.HasOne(d => d.Persona)
                     .WithMany(p => p.PersonaProducto)

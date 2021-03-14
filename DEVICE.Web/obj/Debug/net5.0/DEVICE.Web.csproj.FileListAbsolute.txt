@@ -180,3 +180,6 @@ C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\obj\Debug\
 C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\obj\Debug\net5.0\Razor\Areas\Configuracion\Views\Zona\Index.cshtml.g.cs
 C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\obj\Debug\net5.0\Razor\Areas\Configuracion\Views\_ViewStart.cshtml.g.cs
 C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\obj\Debug\net5.0\Razor\Areas\Configuracion\Views\_ViewImports.cshtml.g.cs
+C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\bin\Debug\net5.0\libman.json
+C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\obj\Debug\net5.0\Razor\Areas\Equipo\Views\AsignacionPersona\Index.cshtml.g.cs
+C:\Users\Personal\source\repos\Personalizado\Device\DEVICE\DEVICE.Web\obj\Debug\net5.0\Razor\Areas\Equipo\Views\AsignacionPersona\Listado.cshtml.g.cs

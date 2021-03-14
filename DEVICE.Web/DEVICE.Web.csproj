@@ -22,6 +22,7 @@
     <Folder Include="Areas\Configuracion\Models\" />
     <Folder Include="Areas\Equipo\Data\" />
     <Folder Include="Areas\Equipo\Models\" />
+    <Folder Include="Documents\AsignacionPersona\" />
   </ItemGroup>
 
 </Project>
